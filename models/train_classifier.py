@@ -30,7 +30,7 @@ nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 def load_data(data_file):
     # read in file
     engine = create_engine('sqlite:///' + data_file)
-    df = pd.read_sql_table('category-data', engine)
+    df = pd.read_sql_table('disaster_category_data', engine)
 
     #Input and Targets
     X = df.message.values
