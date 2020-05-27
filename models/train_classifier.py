@@ -1,3 +1,12 @@
+"""
+TRAIN CLASSIFIER
+Script Command
+> python train_classifier.py ../data/DisasterResponse.db classifier.pkl
+Arguments:
+    1) SQLite db path
+    2) Output Model Name
+"""
+
 import sys
 import pandas as pd
 import numpy as np
@@ -28,6 +37,16 @@ nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 
 
 def load_data(data_file):
+    """
+    Data Loading
+    
+    Arguments:
+        data_file -> path to SQLite db
+    Output:
+        X -> Input features
+        Y -> labels
+    """
+    
     # read in file
     engine = create_engine('sqlite:///' + data_file)
     df = pd.read_sql_table('disaster_category_data', engine)
@@ -38,6 +57,14 @@ def load_data(data_file):
     return X, y
 
 def tokenize(text):
+    """
+    Tokenization
+    
+    Arguments:
+        text -> text messages
+    Output:
+        lem_tokens -> tokenized text
+    """
     url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
     detected_urls = re.findall(url_regex, text)
     for url in detected_urls:
@@ -56,6 +83,9 @@ def tokenize(text):
 
 
 class get_len(BaseEstimator, TransformerMixin):
+    """
+    To get added "Text Length" feature
+    """
     # extractor/transformer to find all uppercase words
     def transform(self, X, y=None):
         X_transformed =np.array([len(text) for text in X]).reshape(-1, 1)
@@ -65,6 +95,12 @@ class get_len(BaseEstimator, TransformerMixin):
         return self
 
 def build_model():
+    """
+    Building Model
+    
+    Output:
+        model -> model architecture ready to be trained
+    """
     pipeline = Pipeline(
         [('features', FeatureUnion([
             ('pipeline', Pipeline([
@@ -87,6 +123,16 @@ def build_model():
 
 
 def train(X, y, model):
+    """
+    Start Training
+    
+    Arguments:
+        X -> X -> Input features
+        Y -> labels
+        model -> model architecture definition
+    Output:
+        model -> Trained model
+    """
 
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
@@ -107,7 +153,13 @@ def train(X, y, model):
     return model
 
 def test_model(model, X_test, y_test, labels):
-    #Evaluates trained model
+    """
+    Evaluates trained model
+    Arguments:
+    X_test -> Input features of Test Set
+    Y_test -> labels of test set
+    model -> Trained model
+    """
 
     preds = model.predict(X_test)
 
@@ -117,12 +169,22 @@ def test_model(model, X_test, y_test, labels):
 
 
 def export_model(model,output_file):
-    # Export model as a pickle file
+    """
+    Export model as a pickle file
+    Arguments:
+    model -> Trained model
+    output_file -> desired destination of trained model
+    """
     joblib.dump(model, open(output_file, 'wb'))
 
 
 
 def run_pipeline(data_file):
+    """
+    Runs Whole pipeline
+    Arguments:
+    data_file -> Cleaned SQL Database
+    """
     X, y = load_data(data_file)  # run ETL pipeline
     model = build_model()  # build model pipeline
     model = train(X, y, model)  # train model pipeline
@@ -130,6 +192,9 @@ def run_pipeline(data_file):
 
 
 if __name__ == '__main__':
+    """
+    main function gets input arguments and starts run_pipeline function
+    """
     data_file = sys.argv[1]  # get filename of dataset
     output_file = sys.argv[2]
     run_pipeline(data_file)  # run data pipeline
