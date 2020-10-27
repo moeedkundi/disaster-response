@@ -37,7 +37,7 @@ colour==0.1.5
 configparser==3.5.3
 cookies==2.2.1
 croniter==0.3.29
-cryptography==2.1.4
+cryptography==3.2
 cycler==0.10.0
 Cython==0.29.6
 dask==0.16.1
