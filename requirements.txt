@@ -137,7 +137,7 @@ nltk==3.2.5
 nose==1.3.7
 nose-ignore-docstring==0.2
 nose-timer==0.7.5
-notebook==5.7.0
+notebook==6.1.5
 ntlm-auth==1.2.0
 numba==0.35.0
 numexpr==2.6.4
