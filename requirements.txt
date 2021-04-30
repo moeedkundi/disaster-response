@@ -220,7 +220,7 @@ requests-oauthlib==0.8.0
 requests-toolbelt==0.9.1
 resampy==0.2.0
 responses==0.10.6
-rsa==3.4.2
+rsa==4.7
 ruamel-yaml==0.11.14
 s3transfer==0.1.13
 scikit-image==0.13.1
