@@ -276,7 +276,7 @@ twython==3.6.0
 tzlocal==1.5.1
 udacity-pa==0.2.7
 unicodecsv==0.14.1
-urllib3==1.22
+urllib3==1.26.5
 utm==0.4.2
 uvloop==0.8.1
 vega==0.4.4
